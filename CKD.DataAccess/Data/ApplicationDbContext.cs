@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CKD.DataAccess.FluentConfig;
+using CKD.DataAccess.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,11 +18,13 @@ namespace CKD.DataAccess.Data
             : base(options)
         {
         }
+        public virtual DbSet<Product> Products { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure Fluent API 
 
+            modelBuilder.ApplyConfiguration(new FluentProductConfig());
 
         }
     }
