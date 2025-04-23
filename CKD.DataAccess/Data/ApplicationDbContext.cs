@@ -18,13 +18,17 @@ namespace CKD.DataAccess.Data
             : base(options)
         {
         }
+
         public virtual DbSet<Product> Products { get; set; }
+        public DbSet<Part> Parts { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure Fluent API 
 
             modelBuilder.ApplyConfiguration(new FluentProductConfig());
+            modelBuilder.ApplyConfiguration(new FluentPartConfig());
 
         }
     }
