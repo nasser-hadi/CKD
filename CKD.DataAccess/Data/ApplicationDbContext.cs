@@ -20,9 +20,10 @@ namespace CKD.DataAccess.Data
         }
 
         public virtual DbSet<Product> Products { get; set; }
-        public DbSet<Part> Parts { get; set; }
+        public virtual DbSet<Part> Parts { get; set; }
 
-
+        public virtual DbSet<ProductPart> ProductParts { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure Fluent API 
@@ -30,6 +31,7 @@ namespace CKD.DataAccess.Data
             modelBuilder.ApplyConfiguration(new FluentProductConfig());
             modelBuilder.ApplyConfiguration(new FluentPartConfig());
 
+            modelBuilder.ApplyConfiguration(new FluentProductPartConfig());
         }
     }
 }
