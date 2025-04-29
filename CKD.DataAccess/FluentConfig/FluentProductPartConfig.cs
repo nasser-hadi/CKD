@@ -1,11 +1,7 @@
-﻿using CKD.DataAccess.Models;
+﻿using System;
+using CKD.DataAccess.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CKD.DataAccess.FluentConfig
 {
@@ -18,6 +14,11 @@ namespace CKD.DataAccess.FluentConfig
             builder.ToTable("TBL_ProductParts");
             
             builder.Property(x => x.Quantity);
+
+            builder.HasOne(b => b.Product).WithMany(b => b.ProductParts).HasForeignKey(b => b.Product_ProductCode);
+
+            builder.HasOne(b => b.Part).WithMany(b => b.ProductParts).HasForeignKey(b => b.Part_TechNo);
+
         }
     }
 }

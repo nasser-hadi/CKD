@@ -1,11 +1,7 @@
-﻿using CKD.DataAccess.FluentConfig;
+﻿using System;
+using CKD.DataAccess.FluentConfig;
 using CKD.DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CKD.DataAccess.Data
 {

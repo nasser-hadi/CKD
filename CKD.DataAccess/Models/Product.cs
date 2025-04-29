@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CKD.DataAccess.Models
 {
@@ -21,5 +17,8 @@ namespace CKD.DataAccess.Models
         public DateTime CreateDate { get; set; }
 
         public int CreateByUserEID { get; set; }
+
+        public virtual ICollection<ProductPart> ProductParts { get; set; } = new List<ProductPart>();
+
     }
 }
