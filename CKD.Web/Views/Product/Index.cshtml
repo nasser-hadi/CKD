@@ -1,0 +1,64 @@
+﻿@model IEnumerable<CKD.DataAccess.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+    int i = 0;
+    i++;
+}
+
+<div class="row">
+    <div class="col-4">
+        <h1 class="text-primary">Product List</h1>
+    </div>
+    <div class="col-6 text-info">
+        <h4>@TempData["Message"]</h4>
+    </div>
+    <div class="col-2">
+        <a asp-controller="Product" asp-action="Create" class="btn btn-outline-primary">Create New Product</a>
+    </div>
+</div>
+<br />
+<table class="table table-striped border">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductVersion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notes2)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th>@i</th>
+                <td>@item.ProductCode</td>
+                <td>@item.ProductVersion</td>
+                <td>@item.ProductName</td>
+                <td>@item.Notes2</td>
+                <td>
+                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.ProductCode" class="btn btn-outline-primary">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                    <a asp-controller="Product" asp-action="" asp-route-id="@item.ProductCode" class="btn btn-outline-danger disabled">
+                        <i class="bi bi-trash3"></i>
+                    </a>
+                    <a asp-controller="Product" asp-action="AddProductParts" asp-route-productCode="@item.ProductCode" class="btn btn-outline-danger">
+                        <i class="bi bi-plus-lg"></i>
+                    </a>
+                </td>
+            </tr>
+            i++;
+        }
+    </tbody>
+</table>
