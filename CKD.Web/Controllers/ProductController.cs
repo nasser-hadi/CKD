@@ -20,11 +20,36 @@ namespace CKD.Web.Controllers
             return View(ToProductViewModels(products));
         }
 
+        /*_________________________________________Create__________________________________________________*/
+
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(ProductViewModel objProduct)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["Message"] = "There was a problem!";
+                return View();
+            }
+
+            _context.Products.Add(ToProductDbModel(objProduct));
+            await _context.SaveChangesAsync();
+
+            TempData["Message"] = "New product created successfully.";
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        /*_________________________________________________________________________________________________*/
+        /*_________________________________________Helper Methods__________________________________________*/
+        /*_________________________________________________________________________________________________*/
 
         public static IEnumerable<ProductViewModel> ToProductViewModels(IEnumerable<Product> inputProducts)
         {
@@ -43,6 +68,20 @@ namespace CKD.Web.Controllers
                 outputProducts.Add(outputProduct);
             }
             return outputProducts;
+        }
+
+        public static Product ToProductDbModel(ProductViewModel productVm)
+        {
+            return new Product
+            {
+                ProductCode = productVm.Id,
+                ProductVersion = productVm.Version,
+                ProductName = productVm.Name,
+                Notes2 = productVm.Notes,
+                EngineTypeDesc = productVm.EngineType,
+                CreateByUserEID = 1284,
+                CreateDate = DateTime.Now,
+            };
         }
     }
 }

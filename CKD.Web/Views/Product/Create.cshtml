@@ -1,1 +1,86 @@
-﻿<p>This is Product create Page!</p>
+﻿@model CKD.Web.ViewModels.ProductViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container border shadow">
+    <div class="row">
+        <div class="col-4">
+            <h1 class="">Create new Product</h1>
+        </div>
+        <div class="col-6 text-info">
+            <h4>@TempData["Message"]</h4>
+        </div>
+        <div class="col-2">
+        </div>
+    </div>
+
+    <hr />
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row form-group my-4">
+            <div class="col-2">
+                <label asp-for="Id" class=""></label>
+            </div>
+            <div class="col-6 ">
+                <input asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row form-group my-4">
+            <div class="col-2">
+                <label asp-for="Version" class=""></label>
+            </div>
+            <div class="col-6 ">
+                <input asp-for="Version" class="form-control" />
+                <span asp-validation-for="Version" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row form-group my-4">
+            <div class="col-2">
+                <label asp-for="Name" class=""></label>
+            </div>
+            <div class="col-6 ">
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row form-group my-4">
+            <div class="col-2">
+                <label asp-for="Notes" class=""></label>
+            </div>
+            <div class="col-6 ">
+                <input asp-for="Notes" class="form-control" />
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row form-group my-4">
+            <div class="col-2">
+                <label asp-for="EngineType" class=""></label>
+            </div>
+            <div class="col-6 ">
+                <input asp-for="EngineType" class="form-control" />
+                <span asp-validation-for="EngineType" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row my-4">
+            <div class="col-2"></div>
+            <div class="col-3">
+                <a asp-controller="Product" asp-action="Index" class="btn btn-outline-secondary form-control">Back</a>
+            </div>
+            <div class="col-3">
+                <button asp-controller="Product" asp-action="Create" type="submit" class="btn btn-outline-primary form-control">Create</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
