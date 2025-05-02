@@ -1,4 +1,5 @@
-﻿@model IEnumerable<CKD.DataAccess.Models.Product>
+﻿@using CKD.Web.ViewModels
+@model IEnumerable<ProductViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -8,7 +9,7 @@
 
 <div class="row">
     <div class="col-4">
-        <h1 class="text-primary">Product List</h1>
+        <h1 class="">Product List</h1>
     </div>
     <div class="col-6 text-info">
         <h4>@TempData["Message"]</h4>
@@ -23,16 +24,16 @@
         <tr>
             <th>#</th>
             <th>
-                @Html.DisplayNameFor(model => model.ProductCode)
+                @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProductVersion)
+                @Html.DisplayNameFor(model => model.Version)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProductName)
+                @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Notes2)
+                @Html.DisplayNameFor(model => model.Notes)
             </th>
             <th></th>
         </tr>
@@ -42,18 +43,18 @@
         {
             <tr>
                 <th>@i</th>
-                <td>@item.ProductCode</td>
-                <td>@item.ProductVersion</td>
-                <td>@item.ProductName</td>
-                <td>@item.Notes2</td>
+                <td>@item.Id</td>
+                <td>@item.Version</td>
+                <td>@item.Name</td>
+                <td>@item.Notes</td>
                 <td>
-                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.ProductCode" class="btn btn-outline-primary">
+                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary">
                         <i class="bi bi-pencil-square"></i>
                     </a>
-                    <a asp-controller="Product" asp-action="" asp-route-id="@item.ProductCode" class="btn btn-outline-danger disabled">
+                    <a asp-controller="Product" asp-action="" asp-route-id="@item.Id" class="btn btn-outline-danger disabled">
                         <i class="bi bi-trash3"></i>
                     </a>
-                    <a asp-controller="Product" asp-action="AddProductParts" asp-route-productCode="@item.ProductCode" class="btn btn-outline-danger">
+                    <a asp-controller="Product" asp-action="AddProductParts" asp-route-id="@item.Id" class="btn btn-outline-danger">
                         <i class="bi bi-plus-lg"></i>
                     </a>
                 </td>
