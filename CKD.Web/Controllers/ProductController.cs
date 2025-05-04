@@ -42,7 +42,6 @@ namespace CKD.Web.Controllers
             await _context.SaveChangesAsync();
 
             TempData["Message"] = "New product created successfully.";
-
             return RedirectToAction(nameof(Index));
         }
 
