@@ -1,0 +1,84 @@
+﻿@using CKD.Web.ViewModels
+@model ProductViewModel
+
+<div class="container border shadow">
+    <div class="row">
+        <div class="col-4">
+            <h1 class="">Edit exist Product</h1>
+        </div>
+        <div class="col-6 text-info">
+            <h4>@TempData["Message"]</h4>
+        </div>
+        <div class="col-2">
+        </div>
+    </div>
+
+    <hr />
+
+    <form method="post">
+        <div class="row form-group my-4">
+            <div class="col-2">
+                <label asp-for="Id" class=""></label>
+            </div>
+            <div class="col-6 ">
+                <input asp-for="Id" readonly class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row form-group my-4">
+            <div class="col-2">
+                <label asp-for="Version" class=""></label>
+            </div>
+            <div class="col-6 ">
+                <input asp-for="Version" readonly class="form-control" />
+                <span asp-validation-for="Version" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row form-group my-4">
+            <div class="col-2">
+                <label asp-for="Name"></label>
+            </div>
+            <div class="col-6 ">
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row form-group my-4">
+            <div class="col-2">
+                <label asp-for="Notes"></label>
+            </div>
+            <div class="col-6 ">
+                <input asp-for="Notes" class="form-control" />
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row form-group my-4">
+            <div class="col-2">
+                <label asp-for="EngineType" class=""></label>
+            </div>
+            <div class="col-6 ">
+                <input asp-for="EngineType" class="form-control" />
+                <span asp-validation-for="EngineType" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row my-4">
+            <div class="col-2"></div>
+            <div class="col-3">
+                <a asp-controller="Product" asp-action="Index" class="btn btn-outline-secondary form-control">
+                    <i class="bi bi-backspace"></i>
+                    Back
+                </a>
+            </div>
+            <div class="col-3">
+                <button asp-controller="Product" asp-action="Edit" type="submit" class="btn btn-outline-success form-control">
+                    <i class="bi bi-pencil"></i>
+                    Edit
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

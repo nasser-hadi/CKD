@@ -45,6 +45,36 @@ namespace CKD.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        /*___________________________________________Edit__________________________________________________*/
+
+        [HttpGet]
+        public IActionResult Edit(string Id)
+        {
+            Product? product = _context.Products.FirstOrDefault(u => u.ProductCode == Id);
+            if (product == null)
+            {
+                return View();
+            }
+
+            return View(ToProductViewModel(product));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(ProductViewModel productVm)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            _context.Products.Update(ToProductDbModel(productVm));
+            await _context.SaveChangesAsync();
+            TempData["Message"] = "Exist product updated successfully.";
+            
+            return RedirectToAction(nameof(Index));
+        }
+
 
         /*_________________________________________________________________________________________________*/
         /*_________________________________________Helper Methods__________________________________________*/
@@ -68,7 +98,17 @@ namespace CKD.Web.Controllers
             }
             return outputProducts;
         }
-
+        public static ProductViewModel ToProductViewModel(Product inputProduct)
+        {
+            return new ProductViewModel
+            {
+                Id = inputProduct.ProductCode,
+                Name = inputProduct.ProductName,
+                Version = inputProduct.ProductVersion,
+                Notes = inputProduct.Notes2,
+                EngineType = inputProduct.EngineTypeDesc
+            };
+        }
         public static Product ToProductDbModel(ProductViewModel productVm)
         {
             return new Product
