@@ -2,6 +2,7 @@
 using CKD.DataAccess.Models;
 using CKD.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CKD.Web.Controllers
 {
@@ -19,6 +20,69 @@ namespace CKD.Web.Controllers
             return View(ToPartViewModels(part));
         }
 
+        /*_________________________________________Create__________________________________________________*/
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(PartViewModel partVm)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["Message"] = "There was a problem!";
+                return View();
+            }
+
+                _context.Parts.Add(ToPartDbModel(partVm));
+                await _context.SaveChangesAsync();
+                TempData["Message"] = "New part created successfully.";
+                return RedirectToAction(nameof(Index));
+        }
+
+        /*___________________________________________Edit__________________________________________________*/
+
+        [HttpGet]
+        public IActionResult Edit(string id)
+        {
+            Part? part = _context.Parts.FirstOrDefault(u => u.TechNo == id);
+            if (part == null)
+            {
+                return NotFound();
+            }
+
+            return View(ToPartViewModel(part));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(string Id, PartViewModel part)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(part);
+            }
+
+            try
+            {
+                _context.Parts.Update(ToPartDbModel(part));
+                await _context.SaveChangesAsync();
+                TempData["Message"] = "Exist part updated successfully.";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                if (!_context.Parts.Any(p => p.TechNo == Id))
+                {
+                    return NotFound();
+                }
+                throw;
+            }
+        }
         /*_________________________________________________________________________________________________*/
         /*_________________________________________Helper Methods__________________________________________*/
         /*________________________________________for mapping data_________________________________________*/
@@ -54,29 +118,16 @@ namespace CKD.Web.Controllers
             };
         }
 
-        /*_________________________________________Create__________________________________________________*/
-
-        [HttpGet]
-        public IActionResult Create()
+        public static PartViewModel ToPartViewModel(Part inputProduct)
         {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(PartViewModel partVm)
-        {
-            if (!ModelState.IsValid)
+            return new PartViewModel
             {
-                TempData["Message"] = "There was a problem!";
-                return View();
-            }
-
-                _context.Parts.Add(ToPartDbModel(partVm));
-                await _context.SaveChangesAsync();
-                TempData["Message"] = "New part created successfully.";
-                TempData["success"] = "New part created successfully.";
-                return RedirectToAction(nameof(Index));
+                Id = inputProduct.TechNo,
+                Version = inputProduct.Version,
+                FarsiName = inputProduct.FarsiName,
+                EnglishName = inputProduct.EnglishName,
+                IsSet = inputProduct.IsSet,                
+            };
         }
     }
 }
