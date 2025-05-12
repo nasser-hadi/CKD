@@ -35,13 +35,22 @@ namespace CKD.Web.Controllers
             if (!ModelState.IsValid)
             {
                 TempData["Message"] = "There was a problem!";
-                return View();
+                return View(partVm);
             }
 
+            if (!IsExists(partVm.Id))
+            {
                 _context.Parts.Add(ToPartDbModel(partVm));
                 await _context.SaveChangesAsync();
                 TempData["Message"] = "New part created successfully.";
+
                 return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                TempData["Message"] = "This Part is exist in database.";
+                return View(partVm);
+            }
         }
 
         /*___________________________________________Edit__________________________________________________*/
@@ -128,6 +137,15 @@ namespace CKD.Web.Controllers
                 EnglishName = inputProduct.EnglishName,
                 IsSet = inputProduct.IsSet,                
             };
+        }
+
+        /*_________________________________________________________________________________________________*/
+        /*_________________________________________Helper Methods__________________________________________*/
+        /*______________________________________________Other______________________________________________*/
+        private bool IsExists(string value)
+        {
+            var exists = _context.Parts.Any(e => e.TechNo == value);
+            return exists;
         }
     }
 }
