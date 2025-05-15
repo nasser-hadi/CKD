@@ -92,10 +92,39 @@ namespace CKD.Web.Controllers
                 throw;
             }
         }
+
+        /*___________________________________________Delete__________________________________________________*/
+
+        [HttpGet]
+        public IActionResult Delete(string id)
+        {
+            Part? part = _context.Parts.FirstOrDefault(u => u.TechNo == id);
+            if (part == null)
+            {
+                return NotFound();
+            }
+            return View(ToPartViewModel( part));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(PartViewModel partVm)
+        {
+            Part? partFromDb = _context.Parts.FirstOrDefault(x => x.TechNo == partVm.Id);
+            if (partFromDb != null)
+            {
+                _context.Parts.Remove(partFromDb);
+                await _context.SaveChangesAsync();
+                TempData["Message"] = "Exist part deleted successfully.";
+
+                return RedirectToAction(nameof(Index));
+            }
+            return View(partVm);
+        }
+
         /*_________________________________________________________________________________________________*/
         /*_________________________________________Helper Methods__________________________________________*/
         /*________________________________________for mapping data_________________________________________*/
-
 
         public static IEnumerable<PartViewModel> ToPartViewModels(IEnumerable<Part> inputParts)
         {

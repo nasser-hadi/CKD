@@ -75,6 +75,34 @@ namespace CKD.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
+        public IActionResult Delete(string id)
+        {
+            Part? part = _context.Parts.FirstOrDefault(u => u.TechNo == id);
+            if (part == null)
+            {
+                return NotFound();
+            }
+
+            return View(ToPartViewModel(part));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(PartViewModel partVm)
+        {
+            Part? partFromDb = _context.Parts.FirstOrDefault(x => x.TechNo == partVm.Id);
+            if (partFromDb != null)
+            {
+                _context.Parts.Remove(partFromDb);
+                await _context.SaveChangesAsync();
+                TempData["Message"] = "Exist part deleted successfully.";
+                
+                return RedirectToAction(nameof(Index));
+            }
+            return View(partVm);
+        }
+
 
         /*_________________________________________________________________________________________________*/
         /*_________________________________________Helper Methods__________________________________________*/
@@ -120,6 +148,17 @@ namespace CKD.Web.Controllers
                 EngineTypeDesc = productVm.EngineType,
                 CreateByUserEID = 1284,
                 CreateDate = DateTime.Now,
+            };
+        }
+        public static PartViewModel ToPartViewModel(Part inputProduct)
+        {
+            return new PartViewModel
+            {
+                Id = inputProduct.TechNo,
+                Version = inputProduct.Version,
+                FarsiName = inputProduct.FarsiName,
+                EnglishName = inputProduct.EnglishName,
+                IsSet = inputProduct.IsSet,
             };
         }
     }
