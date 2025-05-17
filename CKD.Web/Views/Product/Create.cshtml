@@ -4,20 +4,21 @@
     ViewData["Title"] = "Create";
 }
 
-<div class="container border shadow">
+<div class="container-fluid border shadow">
     <div class="row">
         <div class="col-4">
             <h1 class="">Create new Product</h1>
         </div>
         <div class="col-6 text-info">
-            <h4>@TempData["Message"]</h4>
+            <h4>@TempData["message"]</h4>
         </div>
         <div class="col-2">
         </div>
     </div>
 
     <hr />
-    <form asp-action="Create">
+
+    <form asp-action="Create" enctype="multipart/form-data">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="row form-group my-4">
             <div class="col-2">
@@ -56,6 +57,7 @@
                 <span asp-validation-for="Notes" class="text-danger"></span>
             </div>
         </div>
+
         <div class="row form-group my-4">
             <div class="col-2">
                 <label asp-for="EngineType" class=""></label>
@@ -66,19 +68,39 @@
             </div>
         </div>
 
+        <div class="row form-group my-4">
+            <div class="col-2">
+                <label asp-for="Usage" class=""></label>
+            </div>
+            <div class="col-6 ">
+                <input asp-for="Usage" class="form-control" />
+                <span asp-validation-for="Usage" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row form-group my-4">
+            <div class="col-2">
+                <label asp-for="NewImage"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="NewImage" type="file" name="fileUpload" id="fileUpload" class="form-control" />
+                <span asp-validation-for="NewImage" class="text-danger"></span>
+            </div>
+        </div>
+
         <div class="row my-4">
             <div class="col-2"></div>
             <div class="col-3">
                 <a asp-controller="Product" asp-action="Index" class="btn btn-outline-secondary form-control">
                     <i class="bi bi-backspace"></i>
                     Back
-                    </a>
+                </a>
             </div>
             <div class="col-3">
                 <button asp-controller="Product" asp-action="Create" type="submit" class="btn btn-outline-primary form-control">
                     <i class="bi bi-plus-circle"></i>
                     Create
-                    </button>
+                </button>
             </div>
         </div>
     </form>

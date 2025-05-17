@@ -8,9 +8,11 @@ namespace CKD.Web.Controllers
     public class ProductController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public ProductController(ApplicationDbContext context)
+        private readonly IWebHostEnvironment _hostEnvironment;
+        public ProductController(ApplicationDbContext context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            _hostEnvironment = hostEnvironment;
         }
 
         public IActionResult Index()
@@ -30,18 +32,32 @@ namespace CKD.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ProductViewModel objProduct)
+        public async Task<IActionResult> Create(ProductViewModel productVm)
         {
             if (!ModelState.IsValid)
             {
-                TempData["Message"] = "There was a problem!";
+                TempData["message"] = "There was a problem!";
+                TempData["error"] = "There was a problem!";
                 return View();
             }
 
-            _context.Products.Add(ToProductDbModel(objProduct));
-            await _context.SaveChangesAsync();
+            string webRootPath = _hostEnvironment.WebRootPath;
+            var files = HttpContext.Request.Form.Files;
+            string fileName_new = Guid.NewGuid().ToString();
+            var uploads = Path.Combine(webRootPath, @"images\products");
+            var extension = Path.GetExtension(files[0].FileName);
+            using (var fileStream = new FileStream(Path.Combine(uploads, fileName_new + extension), FileMode.Create))
+            {
+                files[0].CopyTo(fileStream);
+            }
 
-            TempData["Message"] = "New product created successfully.";
+            productVm.NewImage = @"\images\products\" + fileName_new + extension;
+            productVm.OldImage = productVm.NewImage;
+
+            _context.Products.Add(ToProductDbModel(productVm));
+            await _context.SaveChangesAsync();
+            TempData["message"] = "New product created successfully.";
+            TempData["success"] = "New product created successfully.";
             return RedirectToAction(nameof(Index));
         }
 
@@ -68,45 +84,45 @@ namespace CKD.Web.Controllers
                 return View();
             }
 
+            string webRootPath = _hostEnvironment.WebRootPath;
+            var files = HttpContext.Request.Form.Files;
+
+
+            var oldImage = productVm.OldImage;
+            if (files.Count > 0)
+            {
+                string fileName_new = Guid.NewGuid().ToString();
+                var uploads = Path.Combine(webRootPath, @"images\products");
+                var extension = Path.GetExtension(files[0].FileName);
+
+                //Delete the old Image
+                var oldImagePath = Path.Combine(webRootPath, oldImage.TrimStart('\\'));
+                if (System.IO.File.Exists(oldImagePath))
+                {
+                    System.IO.File.Delete(oldImagePath);
+                }
+
+                //New upload Image
+                using (var fileStream = new FileStream(Path.Combine(uploads, fileName_new + extension), FileMode.Create))
+                {
+                    files[0].CopyTo(fileStream);
+                }
+                productVm.NewImage = @"\images\products\" + fileName_new + extension;
+            }
+            else
+            {
+                productVm.NewImage = oldImage;
+            }
             _context.Products.Update(ToProductDbModel(productVm));
             await _context.SaveChangesAsync();
-            TempData["Message"] = "Exist product updated successfully.";
-            
+            TempData["message"] = "Exist product updated successfully.";
+            TempData["success"] = "Exist product updated successfully.";
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
-        public IActionResult Delete(string id)
-        {
-            Part? part = _context.Parts.FirstOrDefault(u => u.TechNo == id);
-            if (part == null)
-            {
-                return NotFound();
-            }
-
-            return View(ToPartViewModel(part));
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(PartViewModel partVm)
-        {
-            Part? partFromDb = _context.Parts.FirstOrDefault(x => x.TechNo == partVm.Id);
-            if (partFromDb != null)
-            {
-                _context.Parts.Remove(partFromDb);
-                await _context.SaveChangesAsync();
-                TempData["Message"] = "Exist part deleted successfully.";
-                
-                return RedirectToAction(nameof(Index));
-            }
-            return View(partVm);
-        }
-
-
         /*_________________________________________________________________________________________________*/
         /*_________________________________________Helper Methods__________________________________________*/
-        /*_________________________________________________________________________________________________*/
+        /*________________________________________for mapping data_________________________________________*/
 
         public static IEnumerable<ProductViewModel> ToProductViewModels(IEnumerable<Product> inputProducts)
         {
@@ -119,13 +135,17 @@ namespace CKD.Web.Controllers
                     Id = inputProduct.ProductCode,
                     Name = inputProduct.ProductName,
                     Version = inputProduct.ProductVersion,
-                    Notes = inputProduct.Notes2,
-                    EngineType = inputProduct.EngineTypeDesc
+                    Notes = inputProduct.Notes,
+                    EngineType = inputProduct.EngineTypeDesc,
+                    Usage = inputProduct.Usage,
+                    OldImage = inputProduct.Image,
+                    NewImage = inputProduct.Image,
                 };
                 outputProducts.Add(outputProduct);
             }
             return outputProducts;
         }
+
         public static ProductViewModel ToProductViewModel(Product inputProduct)
         {
             return new ProductViewModel
@@ -133,8 +153,11 @@ namespace CKD.Web.Controllers
                 Id = inputProduct.ProductCode,
                 Name = inputProduct.ProductName,
                 Version = inputProduct.ProductVersion,
-                Notes = inputProduct.Notes2,
-                EngineType = inputProduct.EngineTypeDesc
+                Notes = inputProduct.Notes,
+                EngineType = inputProduct.EngineTypeDesc,
+                Usage = inputProduct.Usage,
+                OldImage = inputProduct.Image,
+                NewImage = inputProduct.Image,
             };
         }
         public static Product ToProductDbModel(ProductViewModel productVm)
@@ -144,21 +167,12 @@ namespace CKD.Web.Controllers
                 ProductCode = productVm.Id,
                 ProductVersion = productVm.Version,
                 ProductName = productVm.Name,
-                Notes2 = productVm.Notes,
+                Notes = productVm.Notes,
                 EngineTypeDesc = productVm.EngineType,
+                Usage = productVm.Usage,
+                Image = productVm.NewImage,
                 CreateByUserEID = 1284,
                 CreateDate = DateTime.Now,
-            };
-        }
-        public static PartViewModel ToPartViewModel(Part inputProduct)
-        {
-            return new PartViewModel
-            {
-                Id = inputProduct.TechNo,
-                Version = inputProduct.Version,
-                FarsiName = inputProduct.FarsiName,
-                EnglishName = inputProduct.EnglishName,
-                IsSet = inputProduct.IsSet,
             };
         }
     }

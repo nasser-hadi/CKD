@@ -1,5 +1,4 @@
-﻿@using CKD.Web.ViewModels
-@model IEnumerable<ProductViewModel>
+﻿@model IEnumerable<CKD.Web.ViewModels.ProductViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -12,7 +11,7 @@
         <h1 class="">Product List</h1>
     </div>
     <div class="col-6 text-info">
-        <h4>@TempData["Message"]</h4>
+        <h4>@TempData["message"]</h4>
     </div>
     <div class="col-2">
         <a asp-controller="Product" asp-action="Create" class="btn btn-outline-primary">
@@ -41,6 +40,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.EngineType)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Usage)
+            </th>
             <th>Operation</th>
         </tr>
     </thead>
@@ -54,16 +56,20 @@
                 <td>@item.Name</td>
                 <td>@item.Notes</td>
                 <td>@item.EngineType</td>
+                <td>@item.Usage</td>
                 <td>
-                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-success">
+                    <a asp-controller="Product" asp-action="Edit" asp-route-Id="@item.Id" data-bs-toggle="tooltip" title="Edit" class="btn btn-outline-success">
                         <i class="bi bi-pencil-square"></i>
                     </a>
                     <a asp-controller="Product" asp-action="" asp-route-id="@item.Id" class="btn btn-outline-danger disabled">
                         <i class="bi bi-trash3"></i>
                     </a>
-                    <a asp-controller="ProductPart" asp-action="AddProductPart" asp-route-id="@item.Id" class="btn btn-outline-primary">
+                    <a asp-controller="ProductPart" asp-action="AddProductPart" asp-route-Id="@item.Id" data-bs-toggle="tooltip" title="Add new Part." class="btn btn-outline-primary">
                         <i class="bi bi-plus-lg"></i>
                         Part
+                    </a>
+                    <a asp-controller="Product" asp-action="Detail" asp-route-id="@item.Id" data-bs-toggle="tooltip" title="Details" class="btn btn-outline-dark">
+                        <i class="bi bi-card-checklist"></i>
                     </a>
                 </td>
             </tr>

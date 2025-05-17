@@ -1,7 +1,11 @@
-﻿using System;
-using CKD.DataAccess.FluentConfig;
+﻿using CKD.DataAccess.FluentConfig;
 using CKD.DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CKD.DataAccess.Data
 {
@@ -15,19 +19,20 @@ namespace CKD.DataAccess.Data
         {
         }
 
-        public virtual DbSet<Product> Products { get; set; }
-        public virtual DbSet<Part> Parts { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Part> Parts { get; set; }
 
-        public virtual DbSet<ProductPart> ProductParts { get; set; }
-        
+        public DbSet<ProductPart> ProductParts { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configure Fluent API 
+            // Configure Fluent API for Models
 
-            modelBuilder.ApplyConfiguration(new FluentProductConfig());
-            modelBuilder.ApplyConfiguration(new FluentPartConfig());
+            modelBuilder.ApplyConfiguration(new ConfigureFluentApiProduct());
+            modelBuilder.ApplyConfiguration(new ConfigureFluentApiPart());
 
-            modelBuilder.ApplyConfiguration(new FluentProductPartConfig());
+            modelBuilder.ApplyConfiguration(new ConfigureFluentApiProductPart());
         }
     }
 }

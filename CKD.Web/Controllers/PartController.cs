@@ -34,7 +34,7 @@ namespace CKD.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                TempData["Message"] = "There was a problem!";
+                TempData["message"] = "There was a problem!";
                 return View(partVm);
             }
 
@@ -42,15 +42,21 @@ namespace CKD.Web.Controllers
             {
                 _context.Parts.Add(ToPartDbModel(partVm));
                 await _context.SaveChangesAsync();
-                TempData["Message"] = "New part created successfully.";
-
+                TempData["message"] = "New part created successfully.";
+                TempData["success"] = "New part created successfully.";
                 return RedirectToAction(nameof(Index));
             }
             else
             {
-                TempData["Message"] = "This Part is exist in database.";
+                TempData["error"] = "This Part is exist in database.";
                 return View(partVm);
             }
+        }
+        /*_________________________________________Helper Methods__________________________________________*/
+        private bool IsExists(string value)
+        {
+            var exists = _context.Parts.Any(e => e.TechNo == value);
+            return exists;
         }
 
         /*___________________________________________Edit__________________________________________________*/
@@ -69,18 +75,19 @@ namespace CKD.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string Id, PartViewModel part)
+        public async Task<IActionResult> Edit(string Id, PartViewModel partVm)
         {
             if (!ModelState.IsValid)
             {
-                return View(part);
+                return View(partVm);
             }
 
             try
             {
-                _context.Parts.Update(ToPartDbModel(part));
+                _context.Parts.Update(ToPartDbModel(partVm));
                 await _context.SaveChangesAsync();
-                TempData["Message"] = "Exist part updated successfully.";
+                TempData["message"] = "Exist part updated successfully.";
+                TempData["success"] = "Exist part updated successfully.";
                 return RedirectToAction(nameof(Index));
             }
             catch (DbUpdateConcurrencyException ex)
@@ -103,7 +110,7 @@ namespace CKD.Web.Controllers
             {
                 return NotFound();
             }
-            return View(ToPartViewModel( part));
+            return View(ToPartViewModel(part));
         }
 
         [HttpPost]
@@ -115,12 +122,12 @@ namespace CKD.Web.Controllers
             {
                 _context.Parts.Remove(partFromDb);
                 await _context.SaveChangesAsync();
-                TempData["Message"] = "Exist part deleted successfully.";
-
+                TempData["message"] = "Exist part deleted successfully.";
+                TempData["success"] = "Exist part deleted successfully.";
                 return RedirectToAction(nameof(Index));
             }
             return View(partVm);
-        }
+        }    
 
         /*_________________________________________________________________________________________________*/
         /*_________________________________________Helper Methods__________________________________________*/
@@ -155,7 +162,6 @@ namespace CKD.Web.Controllers
                 IsSet = partVm.IsSet,
             };
         }
-
         public static PartViewModel ToPartViewModel(Part inputProduct)
         {
             return new PartViewModel
@@ -164,17 +170,8 @@ namespace CKD.Web.Controllers
                 Version = inputProduct.Version,
                 FarsiName = inputProduct.FarsiName,
                 EnglishName = inputProduct.EnglishName,
-                IsSet = inputProduct.IsSet,                
+                IsSet = inputProduct.IsSet,
             };
-        }
-
-        /*_________________________________________________________________________________________________*/
-        /*_________________________________________Helper Methods__________________________________________*/
-        /*______________________________________________Other______________________________________________*/
-        private bool IsExists(string value)
-        {
-            var exists = _context.Parts.Any(e => e.TechNo == value);
-            return exists;
         }
     }
 }

@@ -14,6 +14,8 @@ namespace CKD.Web.ViewModels
         public string Notes { get; set; }
         [DisplayName("Engine Type")]
         public string EngineType { get; set; }
-
+        public string? Usage { get; set; }
+        public string? OldImage { get; set; }
+        public string? NewImage { get; set; }
     }
 }

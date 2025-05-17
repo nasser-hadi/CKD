@@ -12,7 +12,7 @@
         <h1 class="">All available Parts</h1>
     </div>
     <div class="col-6 text-info">
-        <h4>@TempData["Message"]</h4>
+        <h4>@TempData["message"]</h4>
     </div>
     <div class="col-2">
         <a asp-controller="Part" asp-action="Create" class="btn btn-outline-primary">
@@ -47,7 +47,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr class="text-center">
+            <tr class="text-center row2">
                 <th>@i</th>
                 <td>@item.Id</td>
                 <td>@item.Version</td>
@@ -66,7 +66,7 @@
                     </a>
                     @if (item.IsSet == true)
                     {
-                        <a asp-controller="Set" asp-action="AddSetPart" asp-route-Id="" data-bs-toggle="tooltip" title="Add new Part." class="btn btn-outline-primary ">
+                        <a asp-controller="Set" asp-action="AddSetPart" asp-route-Id="" data-bs-toggle="tooltip" title="Add new Part to this Set." class="btn btn-outline-primary ">
                             <i class="bi bi-plus-lg"></i>
                         </a>
                     }

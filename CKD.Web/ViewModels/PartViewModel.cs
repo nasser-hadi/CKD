@@ -14,5 +14,12 @@ namespace CKD.Web.ViewModels
         [DisplayName("IsSet")]
         public bool IsSet { get; set; }
 
+        public string FullName
+        {
+            get
+            {
+                return $"{Id} - {FarsiName}";
+            }
+        }
     }
 }

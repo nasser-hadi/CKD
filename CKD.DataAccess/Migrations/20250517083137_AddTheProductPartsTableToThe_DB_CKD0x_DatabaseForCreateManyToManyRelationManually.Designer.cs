@@ -4,6 +4,7 @@ using CKD.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CKD.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250517083137_AddTheProductPartsTableToThe_DB_CKD0x_DatabaseForCreateManyToManyRelationManually")]
+    partial class AddTheProductPartsTableToThe_DB_CKD0x_DatabaseForCreateManyToManyRelationManually
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,38 +105,7 @@ namespace CKD.DataAccess.Migrations
 
                     b.HasKey("Product_ProductCode", "Part_TechNo");
 
-                    b.HasIndex("Part_TechNo");
-
                     b.ToTable("TBL_ProductParts", (string)null);
-                });
-
-            modelBuilder.Entity("CKD.DataAccess.Models.ProductPart", b =>
-                {
-                    b.HasOne("CKD.DataAccess.Models.Part", "Part")
-                        .WithMany("ProductParts")
-                        .HasForeignKey("Part_TechNo")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CKD.DataAccess.Models.Product", "Product")
-                        .WithMany("ProductParts")
-                        .HasForeignKey("Product_ProductCode")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Part");
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("CKD.DataAccess.Models.Part", b =>
-                {
-                    b.Navigation("ProductParts");
-                });
-
-            modelBuilder.Entity("CKD.DataAccess.Models.Product", b =>
-                {
-                    b.Navigation("ProductParts");
                 });
 #pragma warning restore 612, 618
         }
