@@ -13,7 +13,7 @@ namespace CKD.DataAccess.FluentConfig
             builder.HasKey(ba => new { ba.Product_ProductCode, ba.Part_TechNo });
             builder.ToTable("TBL_ProductParts");
             
-            builder.Property(x => x.Quantity);
+            builder.Property(x => x.Qty);
 
             builder.HasOne(b => b.Product).WithMany(b => b.ProductParts).HasForeignKey(b => b.Product_ProductCode);
 

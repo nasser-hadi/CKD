@@ -17,7 +17,7 @@ namespace CKD.DataAccess.FluentConfig
 
             builder.Property(x => x.ProductVersion).IsRequired();
             builder.Property(x => x.ProductName).IsRequired().HasMaxLength(30);
-            builder.Property(x => x.Notes2).HasMaxLength(500);
+            builder.Property(x => x.Notes).HasMaxLength(500);
             builder.Property(x => x.EngineTypeDesc).IsRequired().HasMaxLength(7);
             builder.Property(x => x.CreateDate);
             builder.Property(x => x.CreateByUserEID);
