@@ -1,10 +1,13 @@
 ﻿@using CKD.Web.ViewModels
 @model ProductViewModel
+@{
+    ViewData["Title"] = "Edit";
+}
 
 <div class="container border shadow">
     <div class="row">
         <div class="col-4">
-            <h1 class="">Edit exist Product</h1>
+            <h2 class="my-2 mx-2">Edit exist Product</h2>
         </div>
         <div class="col-6 text-info">
             <h4>@TempData["message"]</h4>

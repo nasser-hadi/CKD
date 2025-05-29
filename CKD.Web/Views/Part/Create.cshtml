@@ -1,5 +1,5 @@
-﻿@model CKD.Web.ViewModels.PartViewModel
-
+﻿@using CKD.Web.ViewModels
+@model PartViewModel
 @{
     ViewData["Title"] = "Create";
 }
@@ -7,7 +7,7 @@
 <div class="container-fluid border shadow">
     <div class="row">
         <div class="col-4">
-            <h2 class="">Create new Part and Set</h2>
+            <h2 class="my-2 mx-2">Create new Part and Set</h2>
         </div>
         <div class="col-6 text-info">
             <h4>@TempData["message"]</h4>
@@ -17,58 +17,63 @@
     </div>
 
     <hr />
+
     <form asp-action="Create">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="row form-group my-4">
-            <div class="col-2">
-                <label asp-for="Id" class=""></label>
+        <div class="row my-3">
+            <div class="col-1">
             </div>
-            <div class="col-6 ">
-                <input asp-for="Id" class="form-control" />
+            <div class="col-6 form-floating">
+                <input asp-for="Id" class="form-control px-3" aria-required="" placeholder="" />
+                <label asp-for="Id" class="mx-3"></label>
                 <span asp-validation-for="Id" class="text-danger"></span>
             </div>
         </div>
 
-        <div class="row form-group my-4">
-            <div class="col-2">
-                <label asp-for="Version" class=""></label>
+        <div class="row my-3">
+            <div class="col-1">
             </div>
-            <div class="col-6 ">
-                <input asp-for="Version" class="form-control" />
+            <div class="col-6 form-floating">
+                <input asp-for="Version" class="form-control px-3" aria-required="" placeholder="" />
+                <label asp-for="Version" class="mx-3"></label>
                 <span asp-validation-for="Version" class="text-danger"></span>
             </div>
         </div>
-        <div class="row form-group my-4">
-            <div class="col-2">
-                <label asp-for="FarsiName" class=""></label>
+
+        <div class="row my-3">
+            <div class="col-1">
             </div>
-            <div class="col-6 ">
-                <input asp-for="FarsiName" class="form-control" />
+            <div class="col-6 form-floating">
+                <input asp-for="FarsiName" class="form-control px-3" aria-required="" placeholder="" />
+                <label asp-for="FarsiName" class="mx-3"></label>
                 <span asp-validation-for="FarsiName" class="text-danger"></span>
             </div>
         </div>
-        <div class="row form-group my-4">
-            <div class="col-2">
-                <label asp-for="EnglishName" class=""></label>
+
+        <div class="row my-3">
+            <div class="col-1">
             </div>
-            <div class="col-6 ">
-                <input asp-for="EnglishName" class="form-control" />
+            <div class="col-6 form-floating">
+                <input asp-for="EnglishName" class="form-control px-3" aria-required="" placeholder="" />
+                <label asp-for="EnglishName" class="mx-3"></label>
                 <span asp-validation-for="EnglishName" class="text-danger"></span>
             </div>
         </div>
-        <div class="row form-group my-4">
-            <div class="col-2">
-                <label asp-for="IsSet" class="form-check-label"></label>
+
+        <div class="row my-3 ">
+            <div class="col-1">
+                @* <label asp-for="IsSet" class="form-check-label"></label> *@
             </div>
             <div class="col-6 form-check">
                 <input asp-for="IsSet" hidden value="false" id="flexCheckDefault" />
-                <input asp-for="IsSet" type="checkbox" class="form-check-input" value="true" id="flexCheckDefault" />
-                <label asp-for="IsSet" class="form-check-label">Part is a Set?</label>
+                <input asp-for="IsSet" type="checkbox" class="form-check-input mx-1" value="true" id="flexCheckDefault" />
+                <label asp-for="IsSet" class="form-check-label mx-3">Part is a Set?</label>
                 <span asp-validation-for="IsSet" class="text-danger"></span>
             </div>
         </div>
-        <div class="row my-4">
-            <div class="col-2"></div>
+
+        <div class="row my-3">
+            <div class="col-1"></div>
             <div class="col-3">
                 <a asp-controller="Part" asp-action="Index" class="btn btn-outline-secondary form-control">
                     <i class="bi bi-backspace"></i>
