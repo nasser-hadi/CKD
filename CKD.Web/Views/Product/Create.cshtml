@@ -1,5 +1,4 @@
 ﻿@model CKD.Web.ViewModels.ProductViewModel
-
 @{
     ViewData["Title"] = "Create";
 }
@@ -7,9 +6,9 @@
 <div class="container-fluid border shadow">
     <div class="row">
         <div class="col-4">
-            <h1 class="">Create new Product</h1>
+            <h3 class="my-2 mx-4">Create new Product</h3>
         </div>
-        <div class="col-6 text-info">
+        <div class="col-6 text-info my-2">
             <h4>@TempData["message"]</h4>
         </div>
         <div class="col-2">
@@ -18,94 +17,103 @@
 
     <hr />
 
-    <form asp-action="Create" enctype="multipart/form-data">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="row form-group my-4">
-            <div class="col-2">
-                <label asp-for="Id" class=""></label>
-            </div>
-            <div class="col-6 ">
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
-        </div>
+    <div class="row ">
+        <div class="col-8">
 
-        <div class="row form-group my-4">
-            <div class="col-2">
-                <label asp-for="Version" class=""></label>
-            </div>
-            <div class="col-6 ">
-                <input asp-for="Version" class="form-control" />
-                <span asp-validation-for="Version" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="row form-group my-4">
-            <div class="col-2">
-                <label asp-for="Name" class=""></label>
-            </div>
-            <div class="col-6 ">
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="row form-group my-4">
-            <div class="col-2">
-                <label asp-for="Notes" class=""></label>
-            </div>
-            <div class="col-6 ">
-                <input asp-for="Notes" class="form-control" />
-                <span asp-validation-for="Notes" class="text-danger"></span>
-            </div>
-        </div>
+            <form asp-action="Create" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row ">
+                    <div class="col-2">
+                    </div>
+                    <div class="col-8 form-floating">
+                        <input asp-for="Id" class="form-control px-3" aria-required="" placeholder="" />
+                        <label asp-for="Id" class="mx-3"></label>
+                        <span asp-validation-for="Id" class="text-danger"></span>
+                    </div>
+                </div>
 
-        <div class="row form-group my-4">
-            <div class="col-2">
-                <label asp-for="EngineType" class=""></label>
-            </div>
-            <div class="col-6 ">
-                <input asp-for="EngineType" class="form-control" />
-                <span asp-validation-for="EngineType" class="text-danger"></span>
-            </div>
-        </div>
+                <div class="row my-3">
+                    <div class="col-2">
+                    </div>
+                    <div class="col-8 form-floating">
+                        <input asp-for="Version" class="form-control px-3" aria-required="true" placeholder="" />
+                        <label asp-for="Version" class="mx-3"></label>
+                        <span asp-validation-for="Version" class="text-danger"></span>
+                    </div>
+                </div>
 
-        <div class="row form-group my-4">
-            <div class="col-2">
-                <label asp-for="Usage" class=""></label>
-            </div>
-            <div class="col-6 ">
-                <input asp-for="Usage" class="form-control" />
-                <span asp-validation-for="Usage" class="text-danger"></span>
-            </div>
-        </div>
+                <div class="row my-3">
+                    <div class="col-2">
+                    </div>
+                    <div class="col-8 form-floating">
+                        <input asp-for="Name" class="form-control px-3" aria-required="true" placeholder="" />
+                        <label asp-for="Name" class="mx-3"></label>
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                </div>
 
-        <div class="row form-group my-4">
-            <div class="col-2">
-                <label asp-for="NewImage"></label>
-            </div>
-            <div class="col-6">
-                <input asp-for="NewImage" type="file" name="fileUpload" id="fileUpload" class="form-control" />
-                <span asp-validation-for="NewImage" class="text-danger"></span>
-            </div>
-        </div>
+                <div class="row my-3">
+                    <div class="col-2">
+                    </div>
+                    <div class="col-8 form-floating">
+                        <input asp-for="Notes" class="form-control px-3" aria-required="true" placeholder="" />
+                        <label asp-for="Notes" class="mx-3"></label>
+                        <span asp-validation-for="Notes" class="text-danger"></span>
+                    </div>
+                </div>
 
-        <div class="row my-4">
-            <div class="col-2"></div>
-            <div class="col-3">
-                <a asp-controller="Product" asp-action="Index" class="btn btn-outline-secondary form-control">
-                    <i class="bi bi-backspace"></i>
-                    Back
-                </a>
-            </div>
-            <div class="col-3">
-                <button asp-controller="Product" asp-action="Create" type="submit" class="btn btn-outline-primary form-control">
-                    <i class="bi bi-plus-circle"></i>
-                    Create
-                </button>
-            </div>
+                <div class="row my-3">
+                    <div class="col-2">
+                    </div>
+                    <div class="col-8 form-floating">
+                        <input asp-for="EngineType" class="form-control px-3" aria-required="true" placeholder="" />
+                        <label asp-for="EngineType" class="mx-3"></label>
+                        <span asp-validation-for="EngineType" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row my-3">
+                    <div class="col-2">
+                    </div>
+                    <div class="col-8 form-floating">
+                        <input asp-for="Usage" class="form-control px-3" aria-required="true" placeholder="" />
+                        <label asp-for="Usage" class="mx-3"></label>
+                        <span asp-validation-for="Usage" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row form-group my-3">
+                    <div class="col-2">
+                        @* <label asp-for="NewImage"></label> *@
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="NewImage" type="file" name="fileUpload" id="fileUpload" class="form-control" />
+                        <span asp-validation-for="NewImage" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row my-3">
+                    <div class="col-2"></div>
+                    <div class="col-4">
+                        <a asp-controller="Product" asp-action="Index" class="btn btn-outline-secondary form-control">
+                            <i class="bi bi-backspace"></i>
+                            Back
+                        </a>
+                    </div>
+                    <div class="col-4">
+                        <button asp-controller="Product" asp-action="Create" type="submit" class="btn btn-outline-primary form-control">
+                            <i class="bi bi-plus-circle"></i>
+                            Create
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
-    </form>
+        <div class="col-4">
+            <img src="" id="imagePreview" alt="Image Preview" class="img-thumbnail my-3" style="width:350px;height:450px;" />
+        </div>
+    </div>
 </div>
-
 
 @section Scripts {
     @{
