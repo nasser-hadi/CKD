@@ -127,7 +127,7 @@ namespace CKD.Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(partVm);
-        }    
+        }
 
         /*_________________________________________________________________________________________________*/
         /*_________________________________________Helper Methods__________________________________________*/
@@ -145,7 +145,7 @@ namespace CKD.Web.Controllers
                     Version = inputProduct.Version,
                     FarsiName = inputProduct.FarsiName,
                     EnglishName = inputProduct.EnglishName,
-                    IsSet = inputProduct.IsSet,
+                    IsSet = inputProduct.IsComponent,
                 };
                 outputParts.Add(outputPart);
             }
@@ -159,7 +159,7 @@ namespace CKD.Web.Controllers
                 Version = partVm.Version,
                 FarsiName = partVm.FarsiName,
                 EnglishName = partVm.EnglishName,
-                IsSet = partVm.IsSet,
+                IsComponent = partVm.IsSet,
             };
         }
         public static PartViewModel ToPartViewModel(Part inputProduct)
@@ -170,7 +170,7 @@ namespace CKD.Web.Controllers
                 Version = inputProduct.Version,
                 FarsiName = inputProduct.FarsiName,
                 EnglishName = inputProduct.EnglishName,
-                IsSet = inputProduct.IsSet,
+                IsSet = inputProduct.IsComponent,
             };
         }
     }

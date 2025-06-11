@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CKD.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250517082900_AddThePartsTableToThe_DB_CKD0x_Database")]
-    partial class AddThePartsTableToThe_DB_CKD0x_Database
+    [Migration("20250610170024_AddThePartsTableToTheDatabase")]
+    partial class AddThePartsTableToTheDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,7 +40,7 @@ namespace CKD.DataAccess.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<bool>("IsSet")
+                    b.Property<bool>("IsComponent")
                         .HasColumnType("bit");
 
                     b.Property<int>("Version")

@@ -25,10 +25,13 @@ namespace CKD.DataAccess.Data
         {
             // Configure Fluent API for Models
 
+            // Product
             modelBuilder.ApplyConfiguration(new ConfigureFluentApiProduct());
+            // Part
             modelBuilder.ApplyConfiguration(new ConfigureFluentApiPart());
-
+            // ProductPart
             modelBuilder.ApplyConfiguration(new ConfigureFluentApiProductPart());
+
         }
     }
 }

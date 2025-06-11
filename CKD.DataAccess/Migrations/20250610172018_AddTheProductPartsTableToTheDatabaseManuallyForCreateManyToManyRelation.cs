@@ -5,7 +5,7 @@
 namespace CKD.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class AddTheProductPartsTableToTheDB_CKD04_DatabaseAsMappingBetweenProductsAndParts : Migration
+    public partial class AddTheProductPartsTableToTheDatabaseManuallyForCreateManyToManyRelation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

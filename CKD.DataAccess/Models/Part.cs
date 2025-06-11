@@ -8,7 +8,7 @@ namespace CKD.DataAccess.Models
         public int Version { get; set; }
         public string FarsiName { get; set; } = null!;
         public string EnglishName { get; set; } = null!;
-        public bool IsSet { get; set; }
+        public bool IsComponent { get; set; }
 
         public virtual ICollection<ProductPart> ProductParts { get; set; } = new List<ProductPart>();
     }

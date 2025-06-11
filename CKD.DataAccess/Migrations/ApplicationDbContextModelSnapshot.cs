@@ -37,7 +37,7 @@ namespace CKD.DataAccess.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<bool>("IsSet")
+                    b.Property<bool>("IsComponent")
                         .HasColumnType("bit");
 
                     b.Property<int>("Version")
@@ -97,7 +97,7 @@ namespace CKD.DataAccess.Migrations
                     b.Property<string>("Part_TechNo")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<float>("Qty")
+                    b.Property<float>("Quantity")
                         .HasColumnType("real");
 
                     b.HasKey("Product_ProductCode", "Part_TechNo");

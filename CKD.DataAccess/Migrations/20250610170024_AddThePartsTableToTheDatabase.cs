@@ -5,7 +5,7 @@
 namespace CKD.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class AddThePartsTableToTheDB_CKD04_Database : Migration
+    public partial class AddThePartsTableToTheDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,9 +16,9 @@ namespace CKD.DataAccess.Migrations
                 {
                     TechNo = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Version = table.Column<int>(type: "int", nullable: false),
-                    FarsiName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    EnglishName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    IsSet = table.Column<bool>(type: "bit", nullable: false)
+                    FarsiName = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    EnglishName = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    IsComponent = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

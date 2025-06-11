@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CKD.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250517082655_AddTheProductsTableToThe_DB_CKD0x_Database")]
-    partial class AddTheProductsTableToThe_DB_CKD0x_Database
+    [Migration("20250610172018_AddTheProductPartsTableToTheDatabaseManuallyForCreateManyToManyRelation")]
+    partial class AddTheProductPartsTableToTheDatabaseManuallyForCreateManyToManyRelation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,32 @@ namespace CKD.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("CKD.DataAccess.Models.Part", b =>
+                {
+                    b.Property<string>("TechNo")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("EnglishName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("FarsiName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<bool>("IsComponent")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Version")
+                        .HasColumnType("int");
+
+                    b.HasKey("TechNo");
+
+                    b.ToTable("TBL_Parts", (string)null);
+                });
 
             modelBuilder.Entity("CKD.DataAccess.Models.Product", b =>
                 {
@@ -64,6 +90,22 @@ namespace CKD.DataAccess.Migrations
                     b.HasKey("ProductCode");
 
                     b.ToTable("TBL_Products", (string)null);
+                });
+
+            modelBuilder.Entity("CKD.DataAccess.Models.ProductPart", b =>
+                {
+                    b.Property<string>("Product_ProductCode")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Part_TechNo")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<float>("Quantity")
+                        .HasColumnType("real");
+
+                    b.HasKey("Product_ProductCode", "Part_TechNo");
+
+                    b.ToTable("TBL_ProductParts", (string)null);
                 });
 #pragma warning restore 612, 618
         }

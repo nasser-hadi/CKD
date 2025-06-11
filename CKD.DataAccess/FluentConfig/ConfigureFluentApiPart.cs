@@ -9,16 +9,16 @@ namespace CKD.DataAccess.FluentConfig
     {
         public void Configure(EntityTypeBuilder<Part> builder)
         {
-            builder.HasKey(x => x.TechNo);
-
             builder.ToTable("TBL_Parts");
+
+            builder.HasKey(x => x.TechNo);
 
             builder.Property(x => x.TechNo).ValueGeneratedNever();// Ensure the field is not auto-generated
 
             builder.Property(x => x.FarsiName).IsRequired().HasMaxLength(150);
             builder.Property(x => x.EnglishName).IsRequired().HasMaxLength(150);
             builder.Property(x => x.Version);
-            builder.Property(x => x.IsSet);
+            builder.Property(x => x.IsComponent);
         }
     }
 }
