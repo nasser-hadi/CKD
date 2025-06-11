@@ -20,6 +20,7 @@ namespace CKD.DataAccess.Data
 
         public DbSet<ProductPart> ProductParts { get; set; }
 
+        public DbSet<EngineType> EngineTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -31,6 +32,9 @@ namespace CKD.DataAccess.Data
             modelBuilder.ApplyConfiguration(new ConfigureFluentApiPart());
             // ProductPart
             modelBuilder.ApplyConfiguration(new ConfigureFluentApiProductPart());
+
+            // EngineType
+            modelBuilder.ApplyConfiguration(new ConfigureFluentApiEngineType());
 
         }
     }
