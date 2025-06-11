@@ -21,11 +21,13 @@ namespace CKD.DataAccess.FluentConfig
             builder.Property(x => x.ProductVersion).IsRequired();
             builder.Property(x => x.ProductName).IsRequired().HasMaxLength(50);
             builder.Property(x => x.Notes).HasMaxLength(1000);
-            builder.Property(x => x.EngineTypeDesc).IsRequired().HasMaxLength(10);
+            //builder.Property(x => x.EngineTypeDesc).IsRequired().HasMaxLength(10);
             builder.Property(u => u.Image).IsRequired(false);// This makes the field nullable
             builder.Property(u => u.Usage).IsRequired(false).HasMaxLength(25);// This makes the field nullable
             builder.Property(x => x.CreateDate);
             builder.Property(x => x.CreateByUserEID);
+
+            builder.HasOne(p => p.EngineType).WithMany(p => p.Products).HasForeignKey(p => p.EngineType_Id);
         }
     }
 }
