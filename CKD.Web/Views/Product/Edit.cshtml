@@ -65,9 +65,11 @@
                     <div class="col-2">
                     </div>
                     <div class="col-8 form-floating">
-                        <input asp-for="EngineType" class="form-control px-3" />
-                        <label asp-for="EngineType" class="mx-3"></label>
-                        <span asp-validation-for="EngineType" class="text-danger"></span>
+                        <select asp-for="@Model.EngineType_Id" asp-items="@Model.EngineTypeSelectList" name="EngineType_Id" class="form-select px-3">
+                            <option disabled selected>-- Select Engin Type --</option>
+                        </select>
+                        <label asp-for="@Model.EngineType_Id" class="mx-3"></label>
+                        <span asp-validation-for="@Model.EngineType_Id" class="text-danger"></span>
                     </div>
                 </div>
 

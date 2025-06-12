@@ -63,13 +63,16 @@
                     </div>
                 </div>
 
-                <div class="row my-3">
+                <div class="row form-group my-3">
                     <div class="col-2">
+                        @* <label asp-for="EngineType_Name" class="mx-3"></label>*@
                     </div>
                     <div class="col-8 form-floating">
-                        <input asp-for="EngineType" class="form-control px-3" aria-required="true" placeholder="" />
-                        <label asp-for="EngineType" class="mx-3"></label>
-                        <span asp-validation-for="EngineType" class="text-danger"></span>
+                        <select asp-for="EngineType_Id" asp-items="@Model.EngineTypeSelectList" class="form-select px-3">
+                            <option disabled selected>- Select type -</option>
+                        </select>
+                        <label asp-for="EngineType_Id" class="mx-3"></label>
+                        <span asp-validation-for="EngineType_Id" class="text-danger"></span>
                     </div>
                 </div>
 

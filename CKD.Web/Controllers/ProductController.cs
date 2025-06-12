@@ -2,6 +2,7 @@
 using CKD.DataAccess.Models;
 using CKD.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CKD.Web.Controllers
 {
@@ -17,8 +18,14 @@ namespace CKD.Web.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Product> products = _context.Products.ToList();
-
+            IEnumerable<Product>? products = _context.Products.Include(u => u.EngineType).ToList();
+            if (products == null || !products.Any())
+            {
+                TempData["message"] = "Data not found in Database!";
+                TempData["error"] = "Data not found in Database!";
+                //return NotFound("No data found.");
+                return View(ToProductViewModels(products));
+            }
             return View(ToProductViewModels(products));
         }
 
@@ -27,7 +34,16 @@ namespace CKD.Web.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            ProductViewModel productVm = new();
+
+            var allTypes = _context.EngineTypes.ToList();
+
+            productVm.EngineTypeSelectList = allTypes.Select(u => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+            {
+                Value = u.Id.ToString(),
+                Text = u.Name
+            });
+            return View(productVm);
         }
 
         [HttpPost]
@@ -54,7 +70,11 @@ namespace CKD.Web.Controllers
             productVm.NewImage = @"\images\products\" + fileName_new + extension;
             productVm.OldImage = productVm.NewImage;
 
-            _context.Products.Add(ToProductDbModel(productVm));
+            Product product = ToProductDbModel(productVm);
+            product.CreateDate = DateTime.Now;
+            product.CreateByUserEID = 1284;
+
+            _context.Products.Add(product);
             await _context.SaveChangesAsync();
             TempData["message"] = "New product created successfully.";
             TempData["success"] = "New product created successfully.";
@@ -71,8 +91,15 @@ namespace CKD.Web.Controllers
             {
                 return View();
             }
+            var allTypes = _context.EngineTypes.ToList();
+            ProductViewModel productVm = ToProductViewModel(product);
+            productVm.EngineTypeSelectList = allTypes.Select(u => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+            {
+                Value = u.Id.ToString(),
+                Text = u.Name
+            });
 
-            return View(ToProductViewModel(product));
+            return View(productVm);
         }
 
         [HttpPost]
@@ -81,7 +108,7 @@ namespace CKD.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(productVm);
             }
 
             string webRootPath = _hostEnvironment.WebRootPath;
@@ -137,6 +164,8 @@ namespace CKD.Web.Controllers
                     Version = inputProduct.ProductVersion,
                     Notes = inputProduct.Notes,
                     //EngineType = inputProduct.EngineTypeDesc,
+                    EngineType_Id = inputProduct.EngineType.Id,
+                    EngineType_Name = inputProduct.EngineType.Name,
                     Usage = inputProduct.Usage,
                     OldImage = inputProduct.Image,
                     NewImage = inputProduct.Image,
@@ -155,6 +184,8 @@ namespace CKD.Web.Controllers
                 Version = inputProduct.ProductVersion,
                 Notes = inputProduct.Notes,
                 //EngineType = inputProduct.EngineTypeDesc,
+                EngineType_Id = inputProduct.EngineType.Id,
+                EngineType_Name = inputProduct.EngineType.Name,
                 Usage = inputProduct.Usage,
                 OldImage = inputProduct.Image,
                 NewImage = inputProduct.Image,
@@ -169,10 +200,9 @@ namespace CKD.Web.Controllers
                 ProductName = productVm.Name,
                 Notes = productVm.Notes,
                 //EngineTypeDesc = productVm.EngineType,
+                EngineType_Id = productVm.EngineType_Id,
                 Usage = productVm.Usage,
-                Image = productVm.NewImage,
-                CreateByUserEID = 1284,
-                CreateDate = DateTime.Now,
+                Image = productVm.NewImage,               
             };
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel;
 
 namespace CKD.Web.ViewModels
 {
@@ -13,7 +14,14 @@ namespace CKD.Web.ViewModels
         [DisplayName("Desciption")]
         public string Notes { get; set; }
         [DisplayName("Engine Type")]
-        public string EngineType { get; set; }
+        //public string EngineType { get; set; }
+        public int EngineType_Id { get; set; } //= 1;
+        [DisplayName("Engine Type")]
+        public string? EngineType_Name { get; set; }
+
+
+        [DisplayName("Engine Type")]
+        public IEnumerable<SelectListItem>? EngineTypeSelectList { get; set; }
         public string? Usage { get; set; }
         public string? OldImage { get; set; }
         public string? NewImage { get; set; }

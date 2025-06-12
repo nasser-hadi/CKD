@@ -38,7 +38,7 @@
                 @Html.DisplayNameFor(model => model.Notes)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EngineType)
+                @Html.DisplayNameFor(model => model.EngineType_Name)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Usage)
@@ -55,7 +55,7 @@
                 <td>@item.Version</td>
                 <td>@item.Name</td>
                 <td>@item.Notes</td>
-                <td>@item.EngineType</td>
+                <td>@item.EngineType_Name</td>
                 <td>@item.Usage</td>
                 <td>
                     <a asp-controller="Product" asp-action="Edit" asp-route-Id="@item.Id" data-bs-toggle="tooltip" title="Edit" class="btn btn-outline-success">
